@@ -8,7 +8,7 @@ use App\Models\Loterias;
 
 Route::middleware('auth:web')->group(function () {
     
-    Route::get('home', [App\Http\Controllers\homeController::class, 'index'])->name('inicio');
+    Route::get('/', [App\Http\Controllers\homeController::class, 'index'])->name('inicio');
     //Route::get('Dashboard', [App\Http\Controllers\homeController::class, 'index'])->name('Dashboard');
 
 
