@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Http\Livewire\Agente;
+use Carbon\Carbon;
+use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+class ResumenventaController extends Component
+{
+    public $desde;
+    public $hasta;
+    public $ventas;
+    public function mount()
+    {
+        $this->desde = Carbon::now()->format('Y-m-d');
+        $this->hasta = Carbon::now()->format('Y-m-d');
+
+    }
+    public function render()
+    {
+        $this->ventas = DB::table('l_ticket')
+                        ->join('l_ticket_jugadas','l_ticket.idticket','=', 'l_ticket_jugadas.idticket')
+                        ->join('cha_banca_vendedores','l_ticket.idvendedor','=', 'cha_banca_vendedores.idvendedor')
+                        ->join('cha_banca_agentes','cha_banca_agentes.idagente','=', 'cha_banca_vendedores.idagente')
+                        ->select(
+                                    'cha_banca_vendedores.nombre_vendedor',
+                                    
+                                    DB::raw('sum(l_ticket_jugadas.monto_apuesta) as venta'), 
+                                    DB::raw('sum(l_ticket_jugadas.monto_apuesta * (cha_banca_vendedores.porc_animalitos / 100)) as comision'), 
+                                    DB::raw('sum(case when l_ticket_jugadas.estatus = "GAN" then l_ticket_jugadas.monto_apuesta * l_ticket_jugadas.factor else 0 end) as premio')                                     
+                                )
+                        ->where(DB::raw('date(l_ticket.fecha_hora)'),'>=', $this->desde)
+                        ->where(DB::raw('date(l_ticket.fecha_hora)'),'<=', $this->hasta)
+                        ->where('cha_banca_agentes.idagente','=', auth::user()->idagente)
+                        ->where('l_ticket.idestatusticket','<>', 'ANU')
+                        ->groupby('cha_banca_vendedores.nombre_vendedor')
+                        ->get();
+        return view('livewire.agente.resumenventa-controller');
+    }
+}
