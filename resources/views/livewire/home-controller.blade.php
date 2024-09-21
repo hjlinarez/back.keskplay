@@ -1,7 +1,7 @@
 <div>
 
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Resumen de ventas</h1>
+        <h1 class="mt-4">Resumen de venta</h1>
         <form action="">
             <label for="desde">Desde</label>
             <input type="date" id="desde" class="form-control" wire:model="desde">
