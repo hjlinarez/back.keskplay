@@ -26,13 +26,14 @@ jobs:
         - name: Checkout
         uses: actions/checkout@v2
         - name: deploy file
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        uses: actions/checkout@v4
+        uses: Dylan700/sftp-upload-action@latest
         with:
-            username: ${{ SECRETS.FTP_USERNAME }}
-            server: ${{ SECRETS.FTP_HOST }}
-            ssh_private_key: ${{ SECRETS.FTP_PASSWORD }}            
-            remote_path: ${{ SECRETS.FTP_DESTINATION }}
-            
+          server: ${{ SECRETS.FTP_HOST }}
+          username: ${{ SECRETS.FTP_USERNAME }}
+          password: ${{ SECRETS.FTP_PASSWORD }}  
+          port: 22
+          uploads: ${{ SECRETS.FTP_DESTINATION }}
 
 
 
