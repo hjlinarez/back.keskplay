@@ -1,20 +1,38 @@
-on: push
-name: 🚀 Deploy website on push
-jobs:
-  web-deploy:
-    name: 🎉 Deploy
-    runs-on: ubuntu-latest
-    steps:
-    - name: Get latest code
-      uses: actions/checkout@v4
+#on: push
+#name: 🚀 Deploy website on push
+#jobs:
+#  web-deploy:
+#    name: 🎉 Deploy
+#    runs-on: ubuntu-latest
+#    steps:
+#    - name: Get latest code
+#      uses: actions/checkout@v4
     
-    - name: Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: ${{ SECRETS.FTP_HOST }}
-        username: ${{ SECRETS.FTP_USERNAME }}
-        password: ${{ SECRETS.FTP_PASSWORD }}
-        server-dir: ${{ SECRETS.FTP_DESTINATION }} 
+#    - name: Sync files
+#      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+#      with:
+#        server: ${{ SECRETS.FTP_HOST }}
+#        username: ${{ SECRETS.FTP_USERNAME }}
+#        password: ${{ SECRETS.FTP_PASSWORD }}
+#        server-dir: ${{ SECRETS.FTP_DESTINATION }} 
+
+on: [push]
+
+jobs:
+    deploy_job:
+    runs-on: ubuntu-latest
+    name: deploy
+    steps:
+        - name: Checkout
+        uses: actions/checkout@v2
+        - name: deploy file
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+            username: ${{ SECRETS.FTP_USERNAME }}
+            server: ${{ SECRETS.FTP_HOST }}
+            ssh_private_key: ${{ SECRETS.FTP_PASSWORD }}            
+            remote_path: ${{ SECRETS.FTP_DESTINATION }}
+            
 
 
 
