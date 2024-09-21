@@ -1,35 +1,28 @@
-name: Deploy Files
+name: Deploy to SFTP
 
 on:
   push:
     branches:
-      - master
-  # Enables manually triggering of Workflow with file synchronization option
-  workflow_dispatch:
-    inputs:
-      sync:
-        description: "File synchronization"
-        required: true
-        default: "delta"
+      - main # Cambia esto a la rama que uses para despliegues
 
 jobs:
-  deploy-master:
-    name: "master branch"
-    
+  deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+
     steps:
-      - name: "Checkout"
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install SSH Client
+        run: sudo apt-get install -y ssh
+
+      - name: Upload files via SFTP
+        uses: webactions/sftp-deploy@v1
         with:
-          fetch-depth: 0
-      - name: "Deploy"
-        uses: milanmk/actions-file-deployer@master
-        with:
-          remote-protocol: "sftp"
-          remote-host: ${{ SECRETS.FTP_HOST }}
-          remote-user: ${{ SECRETS.FTP_USERNAME }}
-          ssh-private-key: ${{ SECRETS.FTP_PASSWORD }}            
-          remote-path: ${{ SECRETS.FTP_DESTINATION }}  
-          
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 22
+          #local-path: ./path/to/your/files/* # Cambia esto a la ruta de los archivos que quieras enviar
+          remote-path: /xxx/ # Cambia esto a la ruta en el servidor SFTP          
 
