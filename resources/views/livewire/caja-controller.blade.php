@@ -9,7 +9,7 @@
                 <option value="ACT">Solo Activos</option>
                 <option value="BLO">Bloqueados</option>
             </select>
-            @foreach ($data as $dato )  
+            @foreach ($data as $dato )
 
                 <div class="card text-start mt-1">
                     
