@@ -22,6 +22,6 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 22
-          local-dir: ./* # Cambia esto a la ruta de los archivos que quieres enviar
+          local-dir: ./ # Cambia esto a la ruta de los archivos que quieres enviar
           server-dir: /xxx/ # Cambia esto a la ruta en el servidor SFTP
           protocol: ftps # Asegúrate de especificar sftp          
