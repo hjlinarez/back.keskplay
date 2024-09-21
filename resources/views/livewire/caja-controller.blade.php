@@ -7,7 +7,7 @@
             <select name="" id="" class="form-control mt-1" wire:model="estatus">
                 <option value="ALL">Todos</option>
                 <option value="ACT">Solo Activos</option>
-                <option value="BLO">Bloqueados</option>  
+                <option value="BLO">Bloqueados</option>   
             </select>
             @foreach ($data as $dato ) 
 
