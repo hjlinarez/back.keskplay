@@ -28,11 +28,12 @@ jobs:
        # FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         #FTP_DESTINATION: ${{ secrets.FTP_DESTINATION }}
       #run: php artisan config:cache
+    echo ${{ secrets.FTP_DESTINATION }}
 
-    - name: Deploy to shared hosting
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ${{ secrets.FTP_HOST }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ${{ secrets.FTP_DESTINATION }}
+    #- name: Deploy to shared hosting
+    #  uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+    #  with:
+    #    server: ${{ secrets.FTP_HOST }}
+    #    username: ${{ secrets.FTP_USERNAME }}
+    #    password: ${{ secrets.FTP_PASSWORD }}
+    #    server-dir: ${{ secrets.FTP_DESTINATION }}
