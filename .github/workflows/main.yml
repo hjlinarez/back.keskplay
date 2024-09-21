@@ -28,8 +28,11 @@ jobs:
         with:
           remote-protocol: "sftp"
           remote-host: ${{ SECRETS.FTP_HOST }}
-          remote-user: ${{ SECRETS.FTP_USERNAME }}
-          ssh-private-key: ${{ SECRETS.FTP_PASSWORD }}  
+          #remote-user: ${{ SECRETS.FTP_USERNAME }}
+          #ssh-private-key: ${{ SECRETS.FTP_PASSWORD }}  
+
+          remote-user: "keskp6971"
+          ssh-private-key: "Seba090213**"
           remote-path: "./xxx"
 
 
