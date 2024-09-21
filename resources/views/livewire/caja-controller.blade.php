@@ -1,6 +1,6 @@
 <div>
     <h1>Cajas</h1>
-    
+      
     <a href="NuevaCaja" class="btn btn-success btn-sm">Nueva Caja </a>
     <hr>
             <input type="text" class="form-control" placeholder="Buscar" wire:model="filtro">
