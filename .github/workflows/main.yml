@@ -1,9 +1,11 @@
+
+
 name: Deploy to SFTP
 
 on:
   push:
     branches:
-      - master # Cambia esto a la rama que uses para despliegues
+      - master  # Cambia esto a la rama que usas para deploys.
 
 jobs:
   deploy:
@@ -13,16 +15,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install SSH Client
-        run: sudo apt-get install -y ssh
-
       - name: Upload files via SFTP
-        uses: webactions/sftp-deploy@v1
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 22
-          #local-path: ./path/to/your/files/* # Cambia esto a la ruta de los archivos que quieras enviar
-          remote-path: /xxx/ # Cambia esto a la ruta en el servidor SFTP          
-
+          local-dir: ./* # Cambia esto a la ruta de los archivos que quieres enviar
+          server-dir: /xxx/ # Cambia esto a la ruta en el servidor SFTP
+          protocol: sftp # Asegúrate de especificar sftp          
