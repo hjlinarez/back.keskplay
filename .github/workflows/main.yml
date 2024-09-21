@@ -1,39 +1,36 @@
-#on: push
-#name: 🚀 Deploy website on push
-#jobs:
-#  web-deploy:
-#    name: 🎉 Deploy
-#    runs-on: ubuntu-latest
-#    steps:
-#    - name: Get latest code
-#      uses: actions/checkout@v4
-    
-#    - name: Sync files
-#      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-#      with:
-#        server: ${{ SECRETS.FTP_HOST }}
-#        username: ${{ SECRETS.FTP_USERNAME }}
-#        password: ${{ SECRETS.FTP_PASSWORD }}
-#        server-dir: ${{ SECRETS.FTP_DESTINATION }} 
+name: Deploy Files
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+  # Enables manually triggering of Workflow with file synchronization option
+  workflow_dispatch:
+    inputs:
+      sync:
+        description: "File synchronization"
+        required: true
+        default: "delta"
 
 jobs:
-    deploy_job:
+  deploy-master:
+    name: "master branch"
+    
     runs-on: ubuntu-latest
-    name: deploy
+    timeout-minutes: 30
     steps:
-        - name: Checkout
-        uses: actions/checkout@v2
-        - name: deploy file
+      - name: "Checkout"
         uses: actions/checkout@v4
-        uses: Dylan700/sftp-upload-action@latest
         with:
-          server: ${{ SECRETS.FTP_HOST }}
-          username: ${{ SECRETS.FTP_USERNAME }}
-          password: ${{ SECRETS.FTP_PASSWORD }}  
-          port: 22
-          uploads: ${{ SECRETS.FTP_DESTINATION }}
+          fetch-depth: 0
+      - name: "Deploy"
+        uses: milanmk/actions-file-deployer@master
+        with:
+          remote-protocol: "sftp"
+          remote-host: ${{ SECRETS.FTP_HOST }}
+          remote-user: ${{ SECRETS.FTP_USERNAME }}
+          ssh-private-key: ${{ SECRETS.FTP_PASSWORD }}  
+          remote-path: ${{ SECRETS.FTP_DESTINATION }}
 
 
 
