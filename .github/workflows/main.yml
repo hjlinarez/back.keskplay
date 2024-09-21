@@ -30,7 +30,6 @@ jobs:
           remote-host: ${{ SECRETS.FTP_HOST }}
           remote-user: ${{ SECRETS.FTP_USERNAME }}
           ssh-private-key: ${{ SECRETS.FTP_PASSWORD }}  
-          remote-path: ${{ SECRETS.FTP_DESTINATION }}
-
+          remote-path: "/xxx"
 
 
