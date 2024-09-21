@@ -25,5 +25,5 @@ jobs:
           protocol: ftps # Asegúrate de especificar sftp          
           port: 22          
           server-dir: public_html/xxx/ # Cambia esto a la ruta en el servidor SFTP
-          timeout: 100000
+          timeout: 200000
           
