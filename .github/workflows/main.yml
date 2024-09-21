@@ -24,4 +24,4 @@ jobs:
           port: 22
           local-dir: ./ # Cambia esto a la ruta de los archivos que quieres enviar
           server-dir: /xxx/ # Cambia esto a la ruta en el servidor SFTP
-          protocol: sftp # Asegúrate de especificar sftp          
+          
