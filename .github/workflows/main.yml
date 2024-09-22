@@ -20,6 +20,6 @@ jobs:
             username: 'keskp6971'
             password: 'Seba090213**' 
             local_path: './*'
-            remote_path: 'xxx/'
+            remote_path: 'back.keskplay/'
             sftp_only: true
             
