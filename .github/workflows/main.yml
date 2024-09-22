@@ -18,12 +18,14 @@ jobs:
       - name: Upload files via SFTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server:     "146.190.63.79"
-          username:   "keskp6971"
-          password:   "Seba090213**"
-          #protocol:    "sftp"
+          server: 146.190.63.79
+          username: keskp6971
+          password: Seba090213**
+          protocol: ftps
           port: 22          
-          server-dir: public_html/xxx/ # Cambia esto a la ruta en el servidor SFTP
+          #protocol:    "sftp"
+          
+          #server-dir: public_html/xxx/ # Cambia esto a la ruta en el servidor SFTP
           #server:     ${{ secrets.FTP_HOST }}
           #username:   ${{ secrets.FTP_USERNAME }}
           #password:  ${{ secrets.FTP_PASSWORD }}
