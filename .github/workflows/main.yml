@@ -1,33 +1,24 @@
-
-
 name: Deploy to SFTP
 
 on:
   push:
     branches:
-      - master  # Cambia esto a la rama que usas para deploys.
+      - master 
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+    deploy:
+      runs-on: ubuntu-latest
+      name: deploy
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Upload files via SFTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: 146.190.63.79
-          username: keskp6971
-          password: Seba090213**
-          protocol: ftps
-          port: 22          
-          #protocol:    "sftp"
-          
-          #server-dir: public_html/xxx/ # Cambia esto a la ruta en el servidor SFTP
-          #server:     ${{ secrets.FTP_HOST }}
-          #username:   ${{ secrets.FTP_USERNAME }}
-          #password:  ${{ secrets.FTP_PASSWORD }}
-          #timeout: 200000
-          
+        - name: deploy file
+          uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+          with:                
+            server: '146.190.63.79'
+            username: 'keskp6971'
+            ssh_private_key: 'Seba090213**'
+            local_path: './*'
+            remote_path: 'xxx/'
+            
