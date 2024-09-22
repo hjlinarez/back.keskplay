@@ -1,5 +1,5 @@
 <div>
-    <h2>Nueva Caja</h2>
+    <h2>Nueva Cajass</h2>
     <form action="">
         <div class="row">
             <div class="col-md-6">

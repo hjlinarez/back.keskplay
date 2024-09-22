@@ -18,7 +18,7 @@ jobs:
           with:                
             server: '146.190.63.79'
             username: 'keskp6971'
-            password: 'Seba090213**' 
+            password: ${{ secrets.FTP_PASSWORD }}
             local_path: './*'
             remote_path: 'back.keskplay/'
             sftp_only: true
