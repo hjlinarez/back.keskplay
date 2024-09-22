@@ -1,12 +1,23 @@
 <div>
 
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Resumen de venta</h1>
+        <h1 class="mt-4">Resumen de ventas</h1>
+        
         <form action="">
-            <label for="desde">Desde</label>
-            <input type="date" id="desde" class="form-control" wire:model="desde">
-            <label for="hasta">Hasta</label>
-            <input type="date" id="hasta" class="form-control" wire:model="hasta">
+
+            <div class="row">
+                <div class="col">
+                    <label for="desde">Desde</label>
+                    <input type="date" name="desde" id="desde" class="form-control" wire:model="desde">
+                </div>
+                <div class="col">
+                    <label for="hasta">Hasta</label>
+                    <input type="date" id="hasta" class="form-control" wire:model="hasta">
+                </div>
+            </div>
+            
+            
+            
         </form>
         <hr>
         <div class="row">
@@ -118,3 +129,4 @@
         </div>
     </div>
 </div>
+

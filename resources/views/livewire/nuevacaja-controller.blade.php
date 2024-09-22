@@ -35,7 +35,7 @@
         <div class="row">
             <div class="col">
                 <label for="apuesta_minima" class="form-label">Apuesta Minima</label>
-                <input type="number" class="form-control" id="apuesta_minima" wire:model="apuesta_minima"/>
+                <input type="number" class="form-control" id="apuesta_minima" wire:model="apuesta_minima" placeholder=""/>
             </div>
 
             <div class="col">
@@ -43,7 +43,15 @@
                 <input type="number" class="form-control" id="apuesta_maxima" wire:model="apuesta_maxima"/>
             </div>
 
+            <div class="col">
+                <label for="apuesta_maxima" class="form-label">Opciones de Pago</label>
+                <input type="text" class="form-control" id="pagos" wire:model="pagos" placeholder="Ej: 100,200,300"/>
+            </div>
+
         </div>
+
+        <hr>
+        <h5>Jackpot</h5>
 
         <div class="row mt-2">
 
