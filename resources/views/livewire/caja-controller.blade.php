@@ -105,8 +105,7 @@
                                         <div class="card-header">Mini</div>
                                         <div class="card-body">
                                             
-                                            <label for="acumulado_mini_jackpot " class="form-label">Monto Inicial</label>
-                                            <input type="number" class="form-control" id="acumulado_mini_jackpot" wire:model.defer="caja.acumulado_mini_jackpot"/>
+                                            
                     
                                             <label for="porc_mini_jackpot" class="form-label">% Recoleccion</label>
                                             <input type="number" class="form-control" id="porc_mini_jackpot" wire:model.defer="caja.porc_mini_jackpot"/>
@@ -125,8 +124,7 @@
                                     <div class="card">
                                         <div class="card-header">Super</div>
                                         <div class="card-body">
-                                            <label for="acumulado_super_jackpot " class="form-label">Monto Inicial</label>
-                                            <input type="number" class="form-control" id="acumulado_super_jackpot" wire:model.defer="caja.acumulado_super_jackpot"/>
+                                            
                     
                                             <label for="porc_super_jackpot" class="form-label">% Recoleccion</label>
                                             <input type="number" class="form-control" id="porc_super_jackpot" wire:model.defer="caja.porc_super_jackpot" />
@@ -144,8 +142,7 @@
                                     <div class="card">
                                         <div class="card-header">Mega</div>
                                         <div class="card-body">
-                                            <label for="acumulado_mega_jackpot " class="form-label">Monto Inicial</label>
-                                            <input type="number" class="form-control" id="acumulado_mega_jackpot" wire:model.defer="caja.acumulado_mega_jackpot"/>
+                                            
                     
                                             <label for="porc_mega_jackpot" class="form-label">% Recoleccion</label>
                                             <input type="number" class="form-control" id="porc_mega_jackpot" wire:model.defer="caja.porc_mega_jackpot"/>
