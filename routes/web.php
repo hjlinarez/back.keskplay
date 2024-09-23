@@ -20,6 +20,7 @@ Route::middleware('auth:web')->group(function () {
         return view('cajanueva');
     });
 
+  
 
 
 

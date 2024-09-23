@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class NuevacajaController extends Component
 {
-        public $name;
+    public $name;
     public $email;
     public $login;
     public $password;
