@@ -17,7 +17,7 @@
                     <div class="card-body">                        
                         Usuario / Login: {{ $dato->login }}<br>                        
                         Email: {{ $dato->email }}  <br>
-                        Saldo Actual: <strong>{{ number_format($dato->saldo, 2, ',', '.') }} {{ $dato->idmoneda }}</strong>  
+                        Saldo Actual: <strong>{{ number_format($dato->saldo, 2, ',', '.') }} {{ $idmoneda }}</strong>  
                     </div>
                     <div class="card-footer">
                         
