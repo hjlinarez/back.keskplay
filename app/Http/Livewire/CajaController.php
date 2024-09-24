@@ -75,12 +75,15 @@ class CajaController extends Component
     {
         if ($this->estatus == 'ALL')
         {
-            $this->data = Cajas::where('name', 'like', '%'.$this->filtro.'%')->get();
+            $this->data = Cajas::where('name', 'like', '%'.$this->filtro.'%')
+                        ->where('idopera', '=', auth::user()->id)
+                        ->get();
         }
         else 
         {
             $this->data = Cajas::where('name', 'like', '%'.$this->filtro.'%')
                                 ->where('estatus', '=', $this->estatus)
+                                ->where('idopera', '=', auth::user()->id)
                                 ->get();
         }
         
