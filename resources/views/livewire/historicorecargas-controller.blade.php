@@ -1,5 +1,5 @@
 <div class="d-grid">
-    <button type="button" class="btn btn-sm btn-primary" wire:click="historicoRecargas({{ $iduser }})">Historico</button>
+    <button type="button" class="btn btn-sm btn-primary form-control" wire:click="historicoRecargas({{ $iduser }})">Historico</button>
 
 
     <div class="modal fade" id="modalHistoricoRecargas{{ $iduser }}" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-2" aria-labelledby="modalHistoricoRecargasLabel" aria-hidden="true" wire:ignore.self>

@@ -272,5 +272,15 @@ class CajaController extends Component
     }
 
 
+    public function bloquearCaja(Cajas $caja)
+    {
+        $caja->estatus = 'BLO';
+        $caja->save();
+    }
 
+    public function desbloquearCaja(Cajas $caja)
+    {
+        $caja->estatus = 'ACT';
+        $caja->save();
+    }
 }

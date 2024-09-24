@@ -13,7 +13,7 @@
 
                 <div class="card text-start mt-1">
                     
-                    <div class="{{ $dato->estatus == 'BLO' ? 'card-header bg-danger text-white' : 'card-header'}}">{{ $dato->name }} {{ $dato->estatus == 'BLO' ? '(Bloqueado)' : ''}} </div>
+                    <div class="{{ $dato->estatus == 'BLO' ? 'card-header bg-danger text-white' : 'card-header fw-bold'}}">{{ $dato->name }} {{ $dato->estatus == 'BLO' ? '(Bloqueado)' : ''}} </div>
                     <div class="card-body">                        
                         Usuario / Login: {{ $dato->login }}<br>                        
                         Email: {{ $dato->email }}  <br>
@@ -23,14 +23,14 @@
                         
 
                         @if ($dato->estatus == 'BLO')
-                            <button class="btn btn-sm btn-success">Desbloquear</button>
+                            <button type="button" class="btn btn-sm btn-success" wire:click="desbloquearCaja({{ $dato }});">Desbloquear</button>
                         @else
                             <div class="row">
                                 <div class="col">
                                     <button type="button" class="btn btn-sm btn-primary form-control" wire:click="editcaja({{ $dato }});" >Modificar</button>
                                 </div>
                                 <div class="col">
-                                    <button class="btn btn-sm btn-danger form-control">Bloquear</button>
+                                    <button type="button" class="btn btn-sm btn-danger form-control" wire:click="bloquearCaja({{ $dato }});">Bloquear</button>
                                 </div>
                                 <div class="col">
                                     <button type="button" class="btn btn-sm btn-primary form-control" wire:click="recargaSaldoCaja({{ $dato }});" >Recarga</button>
