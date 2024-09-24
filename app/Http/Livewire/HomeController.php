@@ -4,6 +4,7 @@ use Livewire\Component;
 
 use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Constraint\IsEmpty;
+use Illuminate\Support\Facades\Auth;
 
 
 class HomeController extends Component
@@ -41,6 +42,7 @@ class HomeController extends Component
         
         $datos = DB::table('ken_ticket')
                             ->join('ken_ticket_jugadas', 'ken_ticket.idticket', 'ken_ticket_jugadas.idticket')
+                            ->join('users', 'users.id', 'ken_ticket.iduser')
                             ->select(
                                         DB::raw('sum(ken_ticket_jugadas.monto) as ventas'),
                                         DB::raw('sum(case when ken_ticket_jugadas.estatus = "GAN" then ken_ticket_jugadas.monto * ken_ticket_jugadas.factor else 0 end) as premios')
@@ -48,8 +50,10 @@ class HomeController extends Component
                             
                             ->where(DB::raw('date(ken_ticket.created_at)') , '>=', $this->desde)     
                             ->where(DB::raw('date(ken_ticket.created_at)') , '<=', $this->hasta)
+                            ->where('users.idopera', '=', auth::user()->id)
 
                             ->first();
+
         $datos_caja = DB::table('ken_ticket')
                             ->join('ken_ticket_jugadas', 'ken_ticket.idticket', 'ken_ticket_jugadas.idticket')
                             ->join('users', 'users.id', 'ken_ticket.iduser')
@@ -61,6 +65,7 @@ class HomeController extends Component
                             
                             ->where(DB::raw('date(ken_ticket.created_at)') , '>=', $this->desde)
                             ->where(DB::raw('date(ken_ticket.created_at)') , '<=', $this->hasta)
+                            ->where('users.idopera', '=', auth::user()->id)
                             ->groupBy('users.name')
                             ->get();                            
                             
