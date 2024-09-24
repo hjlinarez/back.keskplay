@@ -25,10 +25,25 @@
                         @if ($dato->estatus == 'BLO')
                             <button class="btn btn-sm btn-success">Desbloquear</button>
                         @else
-                            <button type="button" class="btn btn-sm btn-primary" wire:click="editcaja({{ $dato }});" >Modificar</button>
-                            <button class="btn btn-sm btn-danger">Bloquear</button>
-                            <button type="button" class="btn btn-sm btn-primary" wire:click="recargaSaldoCaja({{ $dato }});" >Recarga de Saldo</button>
-                            <button type="button" class="btn btn-sm btn-primary" wire:click="historicoRecargas({{ $dato }});">Historico de Recargas</button>
+                            <div class="row">
+                                <div class="col">
+                                    <button type="button" class="btn btn-sm btn-primary form-control" wire:click="editcaja({{ $dato }});" >Modificar</button>
+                                </div>
+                                <div class="col">
+                                    <button class="btn btn-sm btn-danger form-control">Bloquear</button>
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-sm btn-primary form-control" wire:click="recargaSaldoCaja({{ $dato }});" >Recarga</button>
+                                </div>
+                                <div class="col">
+                                    @livewire('historicorecargas-controller',['caja'=>$dato], key($dato->id))
+                                </div>
+                            </div>
+                            
+                            
+                            
+                            
+                            
                             
                         @endif
 
@@ -206,35 +221,7 @@
             </div>
 
 
-            <div class="modal fade" id="modalHistoricoRecargas" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-2" aria-labelledby="modalHistoricoRecargasLabel" aria-hidden="true" wire:ignore.self>
-                <div class="modal-dialog modal-xl modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="modalHistoricoRecargasLabel">Historico de Recargas</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        
-                       <table class="table ">
-                        <thead>
-                            <tr>
-                                <th>Fecha / Hora</th>
-                                <th>Monto</th>
-                            </tr>
-                        </thead>
-                       </table>
-                       
-                      
-                    </div>
-                    <div class="modal-footer">                      
-                      
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>        
-            </div>
+            
             
         </div>
            
