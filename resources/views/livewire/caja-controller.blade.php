@@ -15,10 +15,9 @@
                     
                     <div class="{{ $dato->estatus == 'BLO' ? 'card-header bg-danger text-white' : 'card-header'}}">{{ $dato->name }} {{ $dato->estatus == 'BLO' ? '(Bloqueado)' : ''}} </div>
                     <div class="card-body">                        
-                        Usuario: {{ $dato->login }}<br>
-                        Telefono:<br>
-                        Direccion: <br> 
-                        Email: {{ $dato->email }}  
+                        Usuario / Login: {{ $dato->login }}<br>                        
+                        Email: {{ $dato->email }}  <br>
+                        Saldo Actual: <strong>{{ number_format($dato->saldo, 2, ',', '.') }} {{ $dato->idmoneda }}</strong>  
                     </div>
                     <div class="card-footer">
                         
@@ -28,8 +27,9 @@
                         @else
                             <button type="button" class="btn btn-sm btn-primary" wire:click="editcaja({{ $dato }});" >Modificar</button>
                             <button class="btn btn-sm btn-danger">Bloquear</button>
-                            <button class="btn btn-sm btn-primary">Parametros</button>
-                            <button class="btn btn-sm btn-primary">Recarga de Saldo</button>
+                            <button type="button" class="btn btn-sm btn-primary" wire:click="recargaSaldoCaja({{ $dato }});" >Recarga de Saldo</button>
+                            <button type="button" class="btn btn-sm btn-primary" wire:click="historicoRecargas({{ $dato }});">Historico de Recargas</button>
+                            
                         @endif
 
 
@@ -41,13 +41,15 @@
                
             @endforeach
        
+            
+        <div wire:ignore.self>
 
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade" id="modalEditCaja" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="modalEditCajaLabel" aria-hidden="true" wire:ignore.self>
 
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Modificar Caja</h1>
+                      <h1 class="modal-title fs-5" id="modalEditCajaLabel">Modificar Caja</h1>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -161,39 +163,101 @@
                             
                             
                             
-                        </form>
-                      
+                        </form>                      
                     </div>
+
+
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button  type="button" class="btn btn-primary" wire:click.prevent=GuardarCaja>Modificar</button>
+                      <button  type="button" class="btn btn-primary" wire:click=GuardarCaja>Modificar</button>
                     </div>
                   </div>
                 </div>
               </div>
         
-</div>
+            </div>
+
+
+            <div class="modal fade" id="modalRecargaSaldo" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-2" aria-labelledby="modalRecargaSaldoLabel" aria-hidden="true" wire:ignore.self>
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="modalRecargaSaldoLabel">Recarga de Saldo</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <form action="">             
+                            
+
+                            <label for="monto_recarga" class="form-label">Monto recarga <strong>({{ $idmoneda }})</strong></label>
+
+                            <input type="number" class="form-control" id="monto_recarga" wire:model.defer="monto_recarga"/>
+                        </form>
+                       
+                      
+                    </div>
+                    <div class="modal-footer">                      
+                      <button  type="button" class="btn form-control btn-primary" wire:click=procesarRecarga>Recargar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>        
+            </div>
+
+
+            <div class="modal fade" id="modalHistoricoRecargas" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-2" aria-labelledby="modalHistoricoRecargasLabel" aria-hidden="true" wire:ignore.self>
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="modalHistoricoRecargasLabel">Historico de Recargas</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                       <table class="table ">
+                        <thead>
+                            <tr>
+                                <th>Fecha / Hora</th>
+                                <th>Monto</th>
+                            </tr>
+                        </thead>
+                       </table>
+                       
+                      
+                    </div>
+                    <div class="modal-footer">                      
+                      
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>        
+            </div>
+            
+        </div>
+           
+
+    </div>
 
 <script>
 
     document.addEventListener('livewire:load', function () {
 
 
-        Livewire.on('open_modal', () => {  
-
-                $('#staticBackdrop').modal('show');
-
+        Livewire.on('open_modal', (name) => {  
+                $("#"+name).modal('toggle'); 
             });
 
-
-        Livewire.on('close_modal', () => {  
-                $('#staticBackdrop').modal('toggle'); 
+        Livewire.on('close_modal', (name) => {  
+                $("#"+name).modal('toggle'); 
             });
-
 
         Livewire.on('mensaje', (titulo, mensaje, tipo) => { 
                 swal(titulo, mensaje, tipo);
             } );
+
 
         
 

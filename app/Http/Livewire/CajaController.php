@@ -1,10 +1,15 @@
 <?php
 
 namespace App\Http\Livewire;
+use DB;
 use Livewire\Component;
 use App\Models\Cajas;
+use App\Models\Recargas;
+use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\TryCatch;
 use Spatie\FlareClient\Context\RequestContextProvider;
+
+
 
 class CajaController extends Component
 {   
@@ -39,10 +44,30 @@ class CajaController extends Component
     public $data;
     public $filtro;
     public $estatus;
+
+    // variables para las recargas
+    public $saldo_operador;
+
+
+
+    public $monto_recarga;
+    public $idusuario_recarga;
+
+    public $idmoneda;
+
+    public $historicoRecargas;
+    
     public function mount()
     {
         $this->filtro = '';
         $this->estatus = 'ALL';
+        $this->saldo_operador = 0;
+        $this->monto_recarga = 0;
+
+        $this->caja = new Cajas;
+
+        $this->idmoneda = auth::user()->idmoneda;
+
 
     }
 
@@ -65,17 +90,20 @@ class CajaController extends Component
 
     public function editcaja(Cajas $caja)
     {
-        $this->skipRender();
+        //$this->skipRender();
         $this->caja = $caja;        
-        $this->emit('open_modal');         
+        $this->emit('open_modal', 'modalEditCaja');         
     }
+
+    
 
     public function GuardarCaja()
     {
 
         if ($this->caja->apuesta_minima <= 0)
         {            
-            $this->emit('mensaje', "Disculpe", "Apuesta minimaaaa es invalida", "error");    
+            $this->emit('mensaje', "Disculpe", "Apuesta minima es invalida", "error");  
+            return false;  
         } 
         
         
@@ -183,7 +211,7 @@ class CajaController extends Component
         try {
             if ($this->caja->save())
             {
-                $this->emit('close_modal');
+                $this->emit('close_modal', 'modalEditCaja');
                 $this->emit('mensaje', "Exito", "Registro actualizado","success"); 
                 
             }
@@ -194,4 +222,55 @@ class CajaController extends Component
 
 
     }
+
+
+    public function recargaSaldoCaja(Cajas $caja)
+    {
+        
+        $this->idusuario_recarga = $caja->id;        
+        $this->monto_recarga = 0;        
+        $this->emit('open_modal', 'modalRecargaSaldo');
+    }
+
+    public function procesarRecarga()
+    {
+        if ($this->monto_recarga <= 0)
+        {
+            $this->emit('mensaje', "Disculpe", "El monto de recarga no es invalido", "error"); 
+            return false;
+        }
+
+        $recarga = new Recargas;
+
+        $recarga->iduser        = $this->idusuario_recarga;
+        $recarga->monto         = $this->monto_recarga;
+        $recarga->idmoneda      = auth::user()->idmoneda;        
+        $recarga->idopera       = auth::user()->id;
+
+        if ($recarga->save())
+        {
+            $caja = Cajas::where('id', '=', $recarga->iduser)->first();
+            $caja->saldo += $recarga->monto;
+            $caja->save();  
+            $this->emit('close_modal', 'modalRecargaSaldo');
+            $this->emit('mensaje', "Exito", "La recarga se realizo satisfactoriamente", "success"); 
+
+        }
+
+
+
+        
+    }
+
+
+    public function historicoRecargas(Cajas $caja)
+    {
+        
+        //$this->idusuario_recarga = $caja->id;        
+        //$this->monto_recarga = 0;        
+        $this->emit('open_modal', 'modalHistoricoRecargas');
+    }
+
+
+
 }
