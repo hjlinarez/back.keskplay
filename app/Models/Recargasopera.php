@@ -5,10 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Operador extends Model
+class Recargasopera extends Model
 {
     use HasFactory;
-    protected $table = "users_opera";
-    
-    
+    protected $table = 'users_opera_recargas';
 }

@@ -7,6 +7,10 @@
             Inicio
         </a>
       
+        <a class="nav-link" href="operador">
+            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+            Operador
+        </a>
 
         <a class="nav-link" href="cajas">
             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>

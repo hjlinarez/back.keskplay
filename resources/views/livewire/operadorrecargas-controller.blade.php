@@ -1,12 +1,12 @@
 <div >
     
-    <button type="button" class="btn btn-sm btn-primary form-control" wire:click="historicoRecargas({{ $iduser }})">Hist. Recargas</button>
+    <button type="button" class="btn btn-sm btn-primary form-control" wire:click="historicoRecargas({{ $idopera }})">Hist. Recargas</button>
 
-    <div class="modal fade" id="modalHistoricoRecargas{{ $iduser }}" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-2" aria-labelledby="modalHistoricoRecargasLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal fade" id="modalHistoricoRecargas{{ $idopera }}" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-2" aria-labelledby="modalHistoricoRecargasLabel" aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-lg modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="modalHistoricoRecargasLabel">Historico de Recargas <strong>({{ $cajaName }})</strong></h1>
+              <h1 class="modal-title fs-5" id="modalHistoricoRecargasLabel">Historico de Recargas <strong>({{ $operadorName }})</strong></h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" >

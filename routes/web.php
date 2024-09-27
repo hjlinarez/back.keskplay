@@ -12,9 +12,15 @@ Route::middleware('auth:web')->group(function () {
     //Route::get('Dashboard', [App\Http\Controllers\homeController::class, 'index'])->name('Dashboard');
 
 
+    Route::get('operador', function(){
+        return view('operador');
+    })->name('operador');
+
+
     Route::get('cajas', function(){
         return view('cajas');
     })->name('cajas');
+
 
     Route::get('NuevaCaja', function(){
         return view('cajanueva');
