@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Cajas;
 use App\Models\Recargas;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Stmt\TryCatch;
 use Spatie\FlareClient\Context\RequestContextProvider;
 
@@ -56,6 +57,8 @@ class CajaController extends Component
     public $idmoneda;
 
     public $historicoRecargas;
+
+    protected $listeners = [ 'render'];
     
     public function mount()
     {
@@ -89,6 +92,66 @@ class CajaController extends Component
         
         return view('livewire.caja-controller');
     }
+
+
+
+
+
+
+
+    public function RegistrarCaja($caja)
+    {
+
+        
+
+
+
+
+
+        $caja = new Cajas;
+        $caja->idopera                      = auth::user()->id;
+        $caja->name                         = $this->name;
+        $caja->email                        = $this->email;
+        $caja->login                        = $this->login;
+        $caja->password                     = Hash::make($this->password);
+        $caja->pagos                        = $this->pagos;
+        $caja->apuesta_minima               = $this->apuesta_minima;
+        $caja->apuesta_maxima               = $this->apuesta_maxima;
+
+        $caja->acumulado_mini_jackpot       = $this->acumulado_mini_jackpot;
+        $caja->porc_mini_jackpot            = $this->porc_mini_jackpot;
+        $caja->limite_mini_jackpot          = $this->limite_mini_jackpot;
+        $caja->porc_entrega_mini_jackpot    = $this->porc_entrega_mini_jackpot;
+
+        $caja->acumulado_super_jackpot       = $this->acumulado_super_jackpot;
+        $caja->porc_super_jackpot            = $this->porc_super_jackpot;
+        $caja->limite_super_jackpot          = $this->limite_super_jackpot;
+        $caja->porc_entrega_super_jackpot    = $this->porc_entrega_super_jackpot;
+
+        $caja->acumulado_mega_jackpot       = $this->acumulado_mega_jackpot;
+        $caja->porc_mega_jackpot            = $this->porc_mega_jackpot;
+        $caja->limite_mega_jackpot          = $this->limite_mega_jackpot;
+        $caja->porc_entrega_mega_jackpot    = $this->porc_entrega_mega_jackpot;
+
+
+
+
+
+        //$caja->pagos    = '{"monedas":[ ]}';
+
+        if ($caja->save())
+        {
+            $this->emit('mensaje', "Exito", "La caja se ha creado satisfactoriamente", "success"); 
+            $this->limpiar();
+            return ;
+        }
+    }
+
+
+
+
+
+
 
 
     public function editcaja(Cajas $caja)

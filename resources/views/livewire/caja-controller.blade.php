@@ -1,7 +1,7 @@
 <div>
-    <h1>Cajas</h1>
-      
-    <a href="NuevaCaja" class="btn btn-success btn-sm">Nueva Caja</a>
+    <h1>Cajas</h1>      
+        
+        @livewire('newcaja-controller')    
     <hr>
             <input type="text" class="form-control" placeholder="Buscar" wire:model="filtro">
             <select name="" id="" class="form-control mt-1" wire:model="estatus">

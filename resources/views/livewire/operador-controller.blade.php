@@ -35,14 +35,15 @@
                         
                             <div class="row">
                                 <div class="col">
-                                    <button type="button" class="btn btn-sm btn-primary form-control" wire:click="edit({{ $dato }});" >Modificar</button>
+                                    <button type="button" class="btn btn-sm btn-primary form-control" wire:click="edit({{ $dato }});"><i class="fa-solid fa-pen"></i> Modificar</button>  
+                                    
                                 </div>
                                 <div class="col">
-                                    <button type="button" class="{{ $dato->estatus == 'BLO' ? 'visually-hidden' : 'btn btn-sm btn-danger form-control' }}" wire:click="bloquear({{ $dato }});">Bloquear</button>
-                                    <button type="button" class="{{ $dato->estatus == 'BLO' ? 'btn btn-sm btn-success form-control' : 'visually-hidden' }}" wire:click="desbloquear({{ $dato }});">Desbloquear</button>
+                                    <button type="button" class="{{ $dato->estatus == 'BLO' ? 'visually-hidden' : 'btn btn-sm btn-danger form-control' }}" wire:click="bloquear({{ $dato }});"><i class="fa-solid fa-lock"></i> Bloquear</button>
+                                    <button type="button" class="{{ $dato->estatus == 'BLO' ? 'btn btn-sm btn-success form-control' : 'visually-hidden' }}" wire:click="desbloquear({{ $dato }});"><i class="fa-solid fa-unlock"></i> Desbloquear</button>
                                 </div>
                                 <div class="col">
-                                    <button type="button" class="{{ $dato->estatus == 'BLO' ? 'visually-hidden' : 'btn btn-sm btn-primary form-control' }}"  wire:click="recargaSaldo({{ $dato }});" >Recarga</button>
+                                    <button type="button" class="{{ $dato->estatus == 'BLO' ? 'visually-hidden' : 'btn btn-sm btn-primary form-control' }}"  wire:click="recargaSaldo({{ $dato }});" ><i class="fa-solid fa-dollar-sign"></i> Recarga</button>
                                 </div>
                                 <div class="col">
                                     @livewire('operadorrecargas-controller', ['operador'=>$dato], key($dato->id))

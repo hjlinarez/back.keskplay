@@ -56,19 +56,41 @@ class OperadorController extends Component
     }
     public function render()
     {
-        if ($this->estatus == 'ALL')
+        if (auth()->user()->perfil == 'MASTER')
         {
-            $this->data = Operador::where('name', 'like', '%'.$this->filtro.'%')
-                        ->where('idpadre', '=', auth::user()->id)
-                        ->get();
+            if ($this->estatus == 'ALL')
+            {
+                $this->data = Operador::where('name', 'like', '%'.$this->filtro.'%')
+                                    ->where('idpadre', '=', 0)
+                                    ->where('perfil', '=', 'OPERA')
+                                    ->get();
+            }
+            else 
+            {
+                $this->data = Operador::where('name', 'like', '%'.$this->filtro.'%')
+                                    ->where('estatus', '=', $this->estatus)
+                                    ->where('idpadre', '=', 0)
+                                    ->where('perfil', '=', 'OPERA')
+                                    ->get();
+            }
         }
         else 
         {
-            $this->data = Operador::where('name', 'like', '%'.$this->filtro.'%')
-                                ->where('estatus', '=', $this->estatus)
-                                ->where('idpadre', '=', auth::user()->id)
-                                ->get();
+            if ($this->estatus == 'ALL')
+            {
+                $this->data = Operador::where('name', 'like', '%'.$this->filtro.'%')
+                            ->where('idpadre', '=', auth::user()->id)
+                            ->get();
+            }
+            else 
+            {
+                $this->data = Operador::where('name', 'like', '%'.$this->filtro.'%')
+                                    ->where('estatus', '=', $this->estatus)
+                                    ->where('idpadre', '=', auth::user()->id)
+                                    ->get();
+            }
         }
+        
 
         return view('livewire.operador-controller');
     }

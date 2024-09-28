@@ -1,6 +1,6 @@
 <div >
     
-    <button type="button" class="btn btn-sm btn-primary form-control" wire:click="historicoRecargas({{ $iduser }})">Hist. Recargas</button>
+    <button type="button" class="btn btn-sm btn-primary form-control" wire:click="historicoRecargas({{ $iduser }})"><i class="fa-solid fa-list"></i> Hist. Recargas</button>
 
     <div class="modal fade" id="modalHistoricoRecargas{{ $iduser }}" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-2" aria-labelledby="modalHistoricoRecargasLabel" aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-lg modal-dialog-centered">

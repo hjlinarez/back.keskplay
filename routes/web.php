@@ -22,10 +22,6 @@ Route::middleware('auth:web')->group(function () {
     })->name('cajas');
 
 
-    Route::get('NuevaCaja', function(){
-        return view('cajanueva');
-    });
-
   
 
 
