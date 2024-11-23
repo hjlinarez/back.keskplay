@@ -42,7 +42,8 @@ class HomeController extends Component
     }
     public function render()
     {        
-        
+          
+        // solo la informacion fguera de loi anulado
         $datos = DB::table('ken_ticket')
                             ->join('ken_ticket_jugadas', 'ken_ticket.idticket', 'ken_ticket_jugadas.idticket')
                             ->join('users', 'users.id', 'ken_ticket.iduser')
@@ -53,8 +54,8 @@ class HomeController extends Component
                             
                             ->where(DB::raw('date(ken_ticket.created_at)') , '>=', $this->desde)     
                             ->where(DB::raw('date(ken_ticket.created_at)') , '<=', $this->hasta)
+                            ->where('ken_ticket.estatus', '<>', 'ANU')
                             ->where('users.idopera', '=', auth::user()->id)
-
                             ->first();
 
 
@@ -70,6 +71,7 @@ class HomeController extends Component
                             
                             ->where(DB::raw('date(ken_ticket.created_at)') , '>=', $this->desde)
                             ->where(DB::raw('date(ken_ticket.created_at)') , '<=', $this->hasta)
+                            ->where('ken_ticket.estatus', '<>', 'ANU')
                             ->where('users.idopera', '=', auth::user()->id)
                             ->groupBy('users.name')
                             ->get();                            
@@ -93,6 +95,7 @@ class HomeController extends Component
                             
                             ->where(DB::raw('date(ken_ticket.created_at)') , '>=', $this->desde)
                             ->where(DB::raw('date(ken_ticket.created_at)') , '<=', $this->hasta)
+                            ->where('ken_ticket.estatus', '<>', 'ANU')
                             ->where('users_opera.idpadre', '=', auth::user()->id)
                             ->groupBy('users_opera.name')
                             ->get();   
