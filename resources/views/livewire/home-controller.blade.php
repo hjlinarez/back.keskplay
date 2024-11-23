@@ -63,11 +63,46 @@
 
 
 
+        <div class="card mb-4">
+            <div class="card-header fs-4">
+                <i class="fas fa-table me-1"></i>
+                Operadores
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="datatables_venta" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-start">Operador</th>
+                                <th class="text-end">Ventas</th>
+                                
+                                <th class="text-end">Premios</th>
+                                <th class="text-end">Utilidad</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($venta_operadores as $operador)
+                                <tr>
+                                    <td class="text-start">{{ $operador->name }}</td>
+                                    <td class="text-end">{{ number_format($operador->ventas, 2, ',', '.') }}</td>
+                                    <td class="text-end">{{ number_format($operador->premios, 2, ',', '.') }}</td>
+                                    <td class="text-end">{{ number_format($operador->ventas - $operador->premios, 2, ',', '.') }}
+                                    </td>
+                                </tr>
+                            @endforeach
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
         <div class="card mb-4">
-            <div class="card-header bg-success text-white">
+            <div class="card-header fs-4">
                 <i class="fas fa-table me-1"></i>
-                Venta (Cajas)
+                Cajas
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -87,46 +122,31 @@
                                     <td class="text-start">{{ $caja->name }}</td>
                                     <td class="text-end">{{ number_format($caja->ventas, 2, ',', '.') }}</td>
                                     <td class="text-end">{{ number_format($caja->premios, 2, ',', '.') }}</td>
-                                    <td class="text-end">{{ number_format($caja->ventas - $caja->premios, 2, ',', '.') }}
-                                    </td>
+                                    <td class="text-end">{{ number_format($caja->ventas - $caja->premios, 2, ',', '.') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
 
-
-
-
-        <div class="card mb-4">
-            <div class="card-header">
-                <i class="fas fa-table me-1"></i>
-                Venta (Operadores)
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table id="datatables_venta" class="table table-dark table-striped">
-                        <thead>
+                        <tfoot>
                             <tr>
-                                <th class="text-start">Taquilla</th>
-                                <th class="text-end">Ventas</th>
-                                <th class="text-end">Comision</th>
-                                <th class="text-end">Premios</th>
-                                <th class="text-end">Utilidad</th>
-
+                                <td class="text-start">Totales</td>
+                                <td class="text-end">{{ number_format($venta_cajas->sum('ventas'), 2, ',', '.') }}</td>
+                                <td class="text-end">{{ number_format($venta_cajas->sum('premios'), 2, ',', '.') }}</td>
+                                <td class="text-end">{{ number_format($venta_cajas->sum('ventas') - $venta_cajas->sum('premios'), 2, ',', '.') }}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-
-
-
-                        </tbody>
+                        </tfoot>
                     </table>
                 </div>
             </div>
         </div>
+
+
+
+
+        
+
+
+
     </div>
 </div>
 
