@@ -94,6 +94,14 @@
 
 
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th class="text-start">Totales</th>
+                                <th class="text-end">{{ number_format($venta_operadores->sum('ventas'), 2, ',', '.') }}</th>
+                                <th class="text-end">{{ number_format($venta_operadores->sum('premios'), 2, ',', '.') }}</th>
+                                <th class="text-end">{{ number_format($venta_operadores->sum('ventas') - $venta_operadores->sum('premios'), 2, ',', '.') }}</th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -129,10 +137,10 @@
 
                         <tfoot>
                             <tr>
-                                <td class="text-start">Totales</td>
-                                <td class="text-end">{{ number_format($venta_cajas->sum('ventas'), 2, ',', '.') }}</td>
-                                <td class="text-end">{{ number_format($venta_cajas->sum('premios'), 2, ',', '.') }}</td>
-                                <td class="text-end">{{ number_format($venta_cajas->sum('ventas') - $venta_cajas->sum('premios'), 2, ',', '.') }}</td>
+                                <th class="text-start">Totales</th>
+                                <th class="text-end">{{ number_format($venta_cajas->sum('ventas'), 2, ',', '.') }}</th>
+                                <th class="text-end">{{ number_format($venta_cajas->sum('premios'), 2, ',', '.') }}</th>
+                                <th class="text-end">{{ number_format($venta_cajas->sum('ventas') - $venta_cajas->sum('premios'), 2, ',', '.') }}</th>
                             </tr>
                         </tfoot>
                     </table>
