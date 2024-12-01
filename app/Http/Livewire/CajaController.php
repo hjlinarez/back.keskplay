@@ -5,6 +5,7 @@ use DB;
 use Livewire\Component;
 use App\Models\Cajas;
 use App\Models\Recargas;
+use App\Models\Paises;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Stmt\TryCatch;
@@ -45,11 +46,9 @@ class CajaController extends Component
     public $data;
     public $filtro;
     public $estatus;
-
     // variables para las recargas
     public $saldo_operador;
-
-
+    public $paises;
 
     public $monto_recarga;
     public $idusuario_recarga;
@@ -66,12 +65,9 @@ class CajaController extends Component
         $this->estatus = 'ALL';
         $this->saldo_operador = 0;
         $this->monto_recarga = 0;
-
         $this->caja = new Cajas;
-
         $this->idmoneda = auth::user()->idmoneda;
-
-
+        $this->paises = Paises::get();
     }
 
     public function render()

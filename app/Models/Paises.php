@@ -5,8 +5,12 @@ use Illuminate\Database\Eloquent\Model;
 class Paises extends Model
 {
     use HasFactory;
-    protected $table = 'cha_pais';
+    protected $table = 'pais';
     protected $primaryKey = 'idpais';
     public $timestamps = false;
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
 }
 ?>

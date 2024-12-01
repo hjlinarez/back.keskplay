@@ -15,15 +15,28 @@
 
                 <form action="">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="name" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="name" required wire:model="caja.name" placeholder="Indique el nombre de la Caja"/>
                         </div>
             
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="name" class="form-label">Correo Electronico</label>
                             <input type="email" class="form-control" id="email" required wire:model="caja.email" placeholder="abc@mail.com"/>
                         </div>
+
+                        <div class="col-md-4">
+                            <label for="idpais" class="form-label">Pais</label>
+                            <select name="idpais" id="idpais" class="form-control" required wire:model="caja.idpais">
+                                <option value="">Seleccione el Pais</option>
+                                @foreach ($paises as $pais )
+                                    <option value="{{ $pais->idpais}}">{{ $pais->pais}}</option>
+                                @endforeach
+                            </select>
+                            
+                        </div>
+
+
                     </div>
             
                     <div class="row">

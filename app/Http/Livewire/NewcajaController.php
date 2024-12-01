@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 use App\Models\Cajas;
-
+use App\Models\Paises;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +14,7 @@ class NewcajaController extends Component
     protected $rules = [
                     'caja.name'=> 'required',
                     'caja.email'=> 'required',
+                    'caja.idpais'=> 'required',
                     'caja.login'=> 'required',
                     'caja.apuesta_minima'=> 'required',
                     'caja.apuesta_maxima'=> 'required',
@@ -38,6 +39,7 @@ class NewcajaController extends Component
 
     public function mount(){
         $this->caja = new Cajas;
+        $this->paises = Paises::get();
     }
 
     public function render()
@@ -159,6 +161,7 @@ class NewcajaController extends Component
         try {
             if ($this->caja->save())
             {
+                $this->caja = new Cajas;
                 $this->emit('close_modal', 'newCaja');
                 $this->emit('render');
                 $this->emit('mensaje', "Exito", "Caja Creada","success"); 
