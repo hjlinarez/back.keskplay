@@ -110,7 +110,7 @@
                                 <th class="text-end">{{ number_format($venta_operadores->sum('ventas'), 2, ',', '.') }}</th>
                                 <th class="text-end">{{ number_format($venta_operadores->sum('premios'), 2, ',', '.') }}</th>
                                 <th class="text-end">{{ number_format($venta_operadores->sum('jackpot'), 2, ',', '.') }}</th>
-                                <th class="text-end">{{ number_format($venta_operadores->sum('ventas') - $venta_operadores->sum('premios') - - $venta_operadores->sum('jackpot'), 2, ',', '.') }}</th>
+                                <th class="text-end">{{ number_format($venta_operadores->sum('ventas') - $venta_operadores->sum('premios') - $venta_operadores->sum('jackpot'), 2, ',', '.') }}</th>
                             </tr>
                         </tfoot>
                     </table>
