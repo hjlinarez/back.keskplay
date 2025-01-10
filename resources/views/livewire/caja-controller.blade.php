@@ -111,8 +111,19 @@
                                 <div class="col">
                                     <label for="apuesta_maxima" class="form-label">Opciones de Pago</label>
                                     <input type="text" class="form-control" id="pagos" wire:model.defer="caja.pagos" placeholder="Ej: 100,200,300"/>
+                                </div>                    
+                            </div>
+
+                            <div class="row">	
+                                <div class="col">
+                                    <label for="">Ubicacion de los Videos</label>
+                                    <select name="keno_location_video" id="keno_location_video" class="form-control" wire:model.defer="caja.keno_location_video">
+                                        <option value="SERVER">SERVIDOR REMOTO</option>
+                                        <option value="LOCAL">RUTA LOCAL</option>
+                                    </select>
+
+                                    
                                 </div>
-                    
                             </div>
                     
                             <hr>

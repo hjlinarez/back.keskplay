@@ -12,6 +12,7 @@ class HomeController extends Component
     public $ventas;
     
     public $premios;
+    public $jackpot;
     public $utilidad;
 
     
@@ -32,7 +33,8 @@ class HomeController extends Component
     
         $this->ventas   = 0;        
         $this->premios  = 0;
-        $this->utilidad = $this->ventas - $this->premios;
+        $this->jackpot  = 0;
+        $this->utilidad = $this->ventas - $this->premios - $this->jackpot;
         $this->desde    = $ano.'-'.$mes.'-'.$dia;
         $this->hasta    = $ano.'-'.$mes.'-'.$dia;
 
@@ -48,7 +50,8 @@ class HomeController extends Component
                             ->join('ken_ticket_jugadas', 'ken_ticket.idticket', 'ken_ticket_jugadas.idticket')
                             ->join('users', 'users.id', 'ken_ticket.iduser')
                             ->select(
-                                        DB::raw('sum(ken_ticket_jugadas.monto) as ventas'),
+                                        DB::raw('sum(ken_ticket_jugadas.monto) as ventas'),                                        
+                                        DB::raw('sum(ken_ticket.premio_jackpot) as jackpot'),                                        
                                         DB::raw('sum(case when ken_ticket_jugadas.estatus = "GAN" then ken_ticket_jugadas.monto * ken_ticket_jugadas.factor else 0 end) as premios')
                                     )
                             
@@ -66,6 +69,7 @@ class HomeController extends Component
                             ->select(   
                                     	'users.name',
                                         DB::raw('sum(ken_ticket_jugadas.monto) as ventas'),
+                                        DB::raw('sum(ken_ticket.premio_jackpot) as jackpot'),
                                         DB::raw('sum(case when ken_ticket_jugadas.estatus = "GAN" then ken_ticket_jugadas.monto * ken_ticket_jugadas.factor else 0 end) as premios')
                                     )
                             
@@ -90,6 +94,7 @@ class HomeController extends Component
                             ->select(   
                                     	'users_opera.name',
                                         DB::raw('sum(ken_ticket_jugadas.monto) as ventas'),
+                                        DB::raw('sum(ken_ticket.premio_jackpot) as jackpot'),
                                         DB::raw('sum(case when ken_ticket_jugadas.estatus = "GAN" then ken_ticket_jugadas.monto * ken_ticket_jugadas.factor else 0 end) as premios')
                                     )
                             
@@ -107,7 +112,8 @@ class HomeController extends Component
         // RESUMEN DE LAS VENTAS GLOBALES                    
         $this->ventas = $datos_caja->sum('ventas') + $datos_operadores->sum('ventas');
         $this->premios = $datos_caja->sum('premios') + $datos_operadores->sum('premios');
-        $this->utilidad = $this->ventas - $this->premios;
+        $this->jackpot = $datos_caja->sum('jackpot') + $datos_operadores->sum('jackpot');
+        $this->utilidad = $this->ventas - $this->premios - $this->jackpot;
 
         
 

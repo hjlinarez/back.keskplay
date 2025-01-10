@@ -23,6 +23,7 @@ class CajaController extends Component
                         'caja.apuesta_minima'=> 'required',
                         'caja.apuesta_maxima'=> 'required',
                         'caja.pagos'=> 'required',
+                        'caja.keno_location_video'=>'required',
 
                         'caja.acumulado_mini_jackpot'=> 'required',
                         'caja.porc_mini_jackpot'=> 'required',

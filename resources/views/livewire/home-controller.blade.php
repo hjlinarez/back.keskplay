@@ -21,19 +21,27 @@
         </form>
         <hr>
         <div class="row">
-            <div class="col-xl-4 col-md-6">
+            <div class="col-xl-3 col-md-6">
                 <div class="card  mb-4">
                     <div class="card-header bg-primary text-white">Ventas</div>
                     <div class="card-body fs-1 text-center">{{ number_format($ventas, 2, ',', '.') }}</div>
                 </div>
             </div>
-            <div class="col-xl-4 col-md-6">
+            <div class="col-xl-3 col-md-6">
                 <div class="card mb-4">
                     <div class="card-header bg-danger text-white">Premios</div>
                     <div class="card-body fs-1 text-center">{{ number_format($premios, 2, ',', '.') }}</div>
                 </div>
             </div>
-            <div class="col-xl-4 col-md-6">
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white">Jackpot</div>
+                    <div class="card-body fs-1 text-center">{{ number_format($jackpot, 2, ',', '.') }}</div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6">
                 <div class="card  mb-4">
                     <div class="card-header bg-success text-white">Utilidad</div>
                     <div class="card-body fs-1 text-center">{{ number_format($utilidad, 2, ',', '.') }}</div>
@@ -77,6 +85,7 @@
                                 <th class="text-end">Ventas</th>
                                 
                                 <th class="text-end">Premios</th>
+                                <th class="text-end">Jackpot</th>
                                 <th class="text-end">Utilidad</th>
 
                             </tr>
@@ -87,7 +96,8 @@
                                     <td class="text-start">{{ $operador->name }}</td>
                                     <td class="text-end">{{ number_format($operador->ventas, 2, ',', '.') }}</td>
                                     <td class="text-end">{{ number_format($operador->premios, 2, ',', '.') }}</td>
-                                    <td class="text-end">{{ number_format($operador->ventas - $operador->premios, 2, ',', '.') }}
+                                    <td class="text-end">{{ number_format($operador->jackpot, 2, ',', '.') }}</td>
+                                    <td class="text-end">{{ number_format($operador->ventas - $operador->premios - $operador->jackpot, 2, ',', '.') }}
                                     </td>
                                 </tr>
                             @endforeach
@@ -99,7 +109,8 @@
                                 <th class="text-start">Totales</th>
                                 <th class="text-end">{{ number_format($venta_operadores->sum('ventas'), 2, ',', '.') }}</th>
                                 <th class="text-end">{{ number_format($venta_operadores->sum('premios'), 2, ',', '.') }}</th>
-                                <th class="text-end">{{ number_format($venta_operadores->sum('ventas') - $venta_operadores->sum('premios'), 2, ',', '.') }}</th>
+                                <th class="text-end">{{ number_format($venta_operadores->sum('jackpot'), 2, ',', '.') }}</th>
+                                <th class="text-end">{{ number_format($venta_operadores->sum('ventas') - $venta_operadores->sum('premios') - - $venta_operadores->sum('jackpot'), 2, ',', '.') }}</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -120,6 +131,7 @@
                                 <th class="text-start">Nombre</th>
                                 <th class="text-end">Ventas</th>
                                 <th class="text-end">Premios</th>
+                                <th class="text-end">Jackpot</th>
                                 <th class="text-end">Utilidad</th>
 
                             </tr>
@@ -130,7 +142,8 @@
                                     <td class="text-start">{{ $caja->name }}</td>
                                     <td class="text-end">{{ number_format($caja->ventas, 2, ',', '.') }}</td>
                                     <td class="text-end">{{ number_format($caja->premios, 2, ',', '.') }}</td>
-                                    <td class="text-end">{{ number_format($caja->ventas - $caja->premios, 2, ',', '.') }}</td>
+                                    <td class="text-end">{{ number_format($caja->jackpot, 2, ',', '.') }}</td>
+                                    <td class="text-end">{{ number_format($caja->ventas - $caja->premios - $caja->jackpot, 2, ',', '.') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -140,7 +153,8 @@
                                 <th class="text-start">Totales</th>
                                 <th class="text-end">{{ number_format($venta_cajas->sum('ventas'), 2, ',', '.') }}</th>
                                 <th class="text-end">{{ number_format($venta_cajas->sum('premios'), 2, ',', '.') }}</th>
-                                <th class="text-end">{{ number_format($venta_cajas->sum('ventas') - $venta_cajas->sum('premios'), 2, ',', '.') }}</th>
+                                <th class="text-end">{{ number_format($venta_cajas->sum('jackpot'), 2, ',', '.') }}</th>
+                                <th class="text-end">{{ number_format($venta_cajas->sum('ventas') - $venta_cajas->sum('premios') - $venta_cajas->sum('jackpot'), 2, ',', '.') }}</th>
                             </tr>
                         </tfoot>
                     </table>
