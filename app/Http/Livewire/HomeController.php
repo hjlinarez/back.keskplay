@@ -69,7 +69,7 @@ class HomeController extends Component
                             ->select(   
                                     	'users.name',
                                         DB::raw('sum(ken_ticket_jugadas.monto) as ventas'),
-                                        DB::raw('sum(ken_ticket.premio_jackpot) as jackpot'),
+                                        DB::raw('sum(DISTINCT ken_ticket.premio_jackpot) as jackpot'),
                                         DB::raw('sum(case when ken_ticket_jugadas.estatus = "GAN" then ken_ticket_jugadas.monto * ken_ticket_jugadas.factor else 0 end) as premios')
                                     )
                             
@@ -94,7 +94,7 @@ class HomeController extends Component
                             ->select(   
                                     	'users_opera.name',
                                         DB::raw('sum(ken_ticket_jugadas.monto) as ventas'),
-                                        DB::raw('sum(ken_ticket.premio_jackpot) as jackpot'),
+                                        DB::raw('sum(DISTINCT ken_ticket.premio_jackpot) as jackpot'),
                                         DB::raw('sum(case when ken_ticket_jugadas.estatus = "GAN" then ken_ticket_jugadas.monto * ken_ticket_jugadas.factor else 0 end) as premios')
                                     )
                             
