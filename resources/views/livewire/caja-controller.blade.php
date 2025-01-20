@@ -121,9 +121,19 @@
                                         <option value="SERVER">SERVIDOR REMOTO</option>
                                         <option value="LOCAL">RUTA LOCAL</option>
                                     </select>
-
-                                    
                                 </div>
+
+                                <div class="col">
+                                    <label for="">Tamaño Fuente Ticket</label>
+                                    <select name="font" id="font" class="form-control" wire:model.defer="caja.font">
+                                        <option value=0>Pequeño</option>
+                                        <option value=1>Mediano</option>
+                                        <option value=2>Grande</option>
+                                        <option value=3>Extra Grande</option>
+                                        
+                                    </select>
+                                </div>
+
                             </div>
                     
                             <hr>
