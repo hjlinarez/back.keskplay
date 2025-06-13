@@ -7,14 +7,47 @@
         <hr>
     </div>
 
-    <input type="text" class="form-control" placeholder="Buscar" wire:model="filtro">
-    <select name="" id="" class="form-control mt-1" wire:model="estatus">
-        <option value="ALL">Todos</option>
-        <option value="ACT">Activos</option>
-        <option value="BLO">Bloqueados</option>   
-    </select>
+    <div class="card">
+        <div class="card-header bg-success text-white">Busqueda</div>
+        <div class="card-body p-1">
+            <div class="row">
+                <div class="col">
+                    <label for="buscar">Nombre</label>
+                    <input type="text" id="buscar" class="form-control" placeholder="Buscar" wire:model="filtro">
+                </div>
 
-    <div class="row">
+                <div class="col">
+                    <label for="status">Status</label>
+                    <select name="" id="status" class="form-control" wire:model="estatus">
+                        <option value="ALL">Todos</option>
+                        <option value="ACT">Activos</option>
+                        <option value="BLO">Bloqueados</option>   
+                    </select>
+
+                </div>
+                <div class="col">
+                    <label for="moneda">Moneda</label>
+                    <select name="" id="moneda" class="form-control" wire:model="idmoneda">
+                        <option value="ALL" selected="selected">Todas</option>
+                        @foreach ($monedas as $moneda)
+                            <option value="{{ $moneda->idmoneda }}">{{ $moneda->moneda }}</option>
+                        @endforeach
+                    </select>   
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    
+
+    
+
+    
+    
+
+    <div class="row mt-4">
     @foreach ($data as $dato ) 
         
             <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
@@ -26,7 +59,7 @@
                         
                         Email: {{ $dato->email }}  <br>
 
-                        Saldo Actual: <strong>{{ number_format($dato->saldo, 2, ',', '.') }} {{ $idmoneda }}</strong> <br> 
+                        Saldo Actual: <strong>{{ number_format($dato->saldo, 2, ',', '.') }} {{ $dato->idmoneda }}</strong> <br> 
 
                         Registro de Operadores: <strong>{{ $dato->suboperadores == 1 ? 'SI': 'NO' }}</strong>  
                         
@@ -118,7 +151,7 @@
                             </div>
                             <div class="modal-body">                                        
                                 <form action="">                                                         
-                                    <label for="monto_recarga" class="form-label">Monto recarga <strong>({{ $idmoneda }})</strong></label>
+                                    <label for="monto_recarga" class="form-label">Monto recarga <strong>({{ $idmoneda_recarga }})</strong></label>
                                     <input type="number" class="form-control" id="monto_recarga" wire:model.defer="monto_recarga"/>
                                 </form>                                                                        
                             </div>

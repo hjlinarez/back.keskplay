@@ -55,6 +55,19 @@
                             <input type="password" class="form-control" id="repeat_password" required />
                         </div>
                     </div>
+                    <div class="class">
+                        <div class="col">
+                            <label for="" class="form-label">Moneda</label>
+                            <select name="idmoneda" id="idmoneda" class="form-control" wire:model.defer=caja.idmoneda>
+                            <option wire:key="moneda-0" value="">Seleccione la Moneda</option>
+                            @foreach ($monedas as $moneda)
+                                <option wire:key="moneda-{{ $moneda->idmoneda }}" value="{{ $moneda->idmoneda }}">
+                                    {{ $moneda->moneda }}
+                                </option>
+                            @endforeach
+                        </select>
+                        </div>
+                    </div>
                     <hr>
                     <h5>Config Keno</h5>
             
@@ -162,7 +175,7 @@
 
 </div>
 <script>
-    $('#newOperador').on('show.bs.modal', function () {
+    $('#newCaja').on('show.bs.modal', function () {
         $('#name').val('');
         $('#email').val('');
         $('#suboperadores').val(0);

@@ -7,12 +7,24 @@
 
             <div class="row">
                 <div class="col">
-                    <label for="desde">Desde</label>
+                    <label for="desde" class="form-label">Desde</label>
                     <input type="date" name="desde" id="desde" class="form-control" wire:model="desde">
                 </div>
                 <div class="col">
-                    <label for="hasta">Hasta</label>
+                    <label for="hasta" class="form-label">Hasta</label>
                     <input type="date" id="hasta" class="form-control" wire:model="hasta">
+                </div>
+                <div class="col">
+
+                    <label for="idmoneda" class="form-label">Moneda</label>
+                    <select name="idmoneda" id="idmoneda" class="form-control" wire:model="idmoneda">
+                        <option wire:key="moneda-0" value="">Seleccione la Moneda</option>
+                        @foreach ($monedas as $moneda)
+                            <option wire:key="moneda-{{ $moneda->idmoneda }}" value="{{ $moneda->idmoneda }}">
+                                {{ $moneda->moneda }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             

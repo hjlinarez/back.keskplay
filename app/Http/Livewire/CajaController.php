@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Cajas;
 use App\Models\Recargas;
 use App\Models\Paises;
+use App\Models\Monedas;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Stmt\TryCatch;
@@ -59,6 +60,8 @@ class CajaController extends Component
 
     public $historicoRecargas;
 
+    public $monedas = [];
+
     protected $listeners = [ 'render'];
     
     public function mount()
@@ -68,28 +71,35 @@ class CajaController extends Component
         $this->saldo_operador = 0;
         $this->monto_recarga = 0;
         $this->caja = new Cajas;
-        $this->idmoneda = auth::user()->idmoneda;
+        //$this->idmoneda = auth::user()->idmoneda;
+        $this->idmoneda = 'ALL';
         $this->paises = Paises::get();
+
+        if (auth::user()->idpadre == 0) {            
+            $this->monedas = Monedas::get();            
+        } else {
+            $this->monedas = Monedas::where('idmoneda','=', auth::user()->idmoneda)->get();                        
+        }
+        
     }
 
     public function render()
-    {
-        if ($this->estatus == 'ALL')
-        {
-            $this->data = Cajas::where('name', 'like', '%'.$this->filtro.'%')
-                        ->where('idopera', '=', auth::user()->id)
-                        ->get();
+{
+        $query = Cajas::where('name', 'like', '%'.$this->filtro.'%')
+                    ->where('idopera', auth()->user()->id);
+
+        if ($this->estatus !== 'ALL') {
+            $query->where('estatus', $this->estatus);
         }
-        else 
-        {
-            $this->data = Cajas::where('name', 'like', '%'.$this->filtro.'%')
-                                ->where('estatus', '=', $this->estatus)
-                                ->where('idopera', '=', auth::user()->id)
-                                ->get();
+
+        if ($this->idmoneda !== 'ALL') {
+            $query->where('idmoneda', $this->idmoneda);
         }
-        
-        return view('livewire.caja-controller');
-    }
+
+        $this->data = $query->get();
+
+    return view('livewire.caja-controller');
+}
 
 
 
@@ -99,12 +109,6 @@ class CajaController extends Component
 
     public function RegistrarCaja($caja)
     {
-
-        
-
-
-
-
 
         $caja = new Cajas;
         $caja->idopera                      = auth::user()->id;
@@ -293,6 +297,7 @@ class CajaController extends Component
         
         $this->idusuario_recarga = $caja->id;        
         $this->monto_recarga = 0;        
+        $this->idmoneda = $caja->idmoneda;
         $this->emit('open_modal', 'modalRecargaSaldo');
     }
 

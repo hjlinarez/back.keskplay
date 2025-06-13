@@ -25,12 +25,22 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="" class="form-label">Permitir el regigtro de Operadores</label>
-                        <select class="form-control" name="suboperadores" id="suboperadores" wire:model=operador.suboperadores>
+                        <label for="" class="form-label">Moneda</label>
+                        <select name="idmoneda" id="idmoneda" class="form-control" wire:model.defer="operador.idmoneda">
+                          <option wire:key="moneda-0" value="">Seleccione la Moneda</option>
+                          @foreach ($monedas as $moneda)
+                              <option wire:key="moneda-{{ $moneda->idmoneda }}" value="{{ $moneda->idmoneda }}">
+                                  {{ $moneda->moneda }}
+                              </option>
+                          @endforeach
+                      </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="" class="form-label">Permitir el registro de Operadores</label>
+                        <select class="form-control" name="suboperadores" id="suboperadores" wire:model.defer=operador.suboperadores>
                             <option value=0>NO</option>
                             <option value=1>SI</option>
-                            
-
                         </select>
                         
                     </div>
@@ -44,7 +54,7 @@
             <div class="modal-footer">                      
               
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-success"  wire:click=registrar>Crear</button>
+              <button type="button" class="btn btn-success"  wire:click.defer=registrar>Crear</button>
               
             </div>
           </div>

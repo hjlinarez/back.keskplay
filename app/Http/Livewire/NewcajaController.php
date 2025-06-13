@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 use App\Models\Cajas;
 use App\Models\Paises;
+use App\Models\Monedas;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class NewcajaController extends Component
 {
     public $caja;
+    public $monedas;
 
     protected $rules = [
                     'caja.name'=> 'required',
@@ -20,6 +22,7 @@ class NewcajaController extends Component
                     'caja.apuesta_maxima'=> 'required',
                     'caja.pagos'=> 'required',
                     'caja.password'=> 'required',
+                    'caja.idmoneda'=> 'required',
 
                     'caja.acumulado_mini_jackpot'=> 'required',
                     'caja.porc_mini_jackpot'=> 'required',
@@ -40,6 +43,14 @@ class NewcajaController extends Component
     public function mount(){
         $this->caja = new Cajas;
         $this->paises = Paises::get();
+
+
+        if (Auth::user()->idpadre == 0) {
+            $this->monedas = Monedas::get();
+        } else {         
+            $this->monedas = Monedas::where('idmoneda', Auth::user()->idmoneda)->get();
+        }
+        
     }
 
     public function render()
@@ -49,12 +60,15 @@ class NewcajaController extends Component
 
     public function Registrar(){
 
-        if ($this->caja->name  == null){ $this->emit('mensaje', "Disculpe", "Debe indicar el nombre de la caja", "error"); return false;} 
+
         
+
+        if ($this->caja->name  == null){ $this->emit('mensaje', "Disculpe", "Debe indicar el nombre de la caja", "error"); return false;}         
         if ($this->caja->email == null){ $this->emit('mensaje', "Disculpe", "Indique el correo electronico", "error"); return false;} 
         if ($this->caja->login == null){ $this->emit('mensaje', "Disculpe", "Indique el login de la caja", "error"); return false;} 
         if ($this->caja->password == null){ $this->emit('mensaje', "Disculpe", "Indique el password", "error"); return false;} 
         if ($this->caja->password <> $this->caja->password){ $this->emit('mensaje', "Disculpe", "Las claves no coincide.", "error"); return false;} 
+        if ($this->caja->idmoneda == null){ $this->emit('mensaje', "Disculpe", "Seleccione la moneda", "error"); return false;} 
 
 
         $cantidad_opciones = count(explode(",",$this->caja->pagos));
@@ -155,7 +169,7 @@ class NewcajaController extends Component
 
 
         $this->caja->idopera                      = auth::user()->id;        
-        $this->caja->idmoneda                      = auth::user()->idmoneda;        
+        //$this->caja->idmoneda                      = auth::user()->idmoneda;        
         $this->caja->password                     = Hash::make($this->caja->password);
 
         try {

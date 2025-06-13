@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Cajas;
 use App\Models\Recargasopera;
 use App\Models\Operador;
+use App\Models\Monedas;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\TryCatch;
@@ -28,11 +29,20 @@ class OperadorController extends Component
 
     public $idopera_recarga;
     public $monto_recarga;
-
     public $suboperadores = 0;
+    public $monedas;
+    public $idmoneda = 'ALL';
+    public $idmoneda_recarga = '';
 
     
-    protected $listeners = ['RegistrarOperador'=>'RegistrarOperador'];
+    protected $listeners = [
+                            'RegistrarOperador'=>'RegistrarOperador', 
+                            'refreshOperador' => 'render'
+                        ];
+
+    
+
+
     public function mount()
     {
         
@@ -41,8 +51,16 @@ class OperadorController extends Component
         $this->saldo_operador = 0;
         $this->monto_recarga = 0;
         $this->data = [];
-        $this->idmoneda = auth::user()->idmoneda;
+        //$this->idmoneda = auth::user()->idmoneda;
         $this->suboperadores = auth::user()->suboperadores;
+
+
+        $this->idmoneda = 'ALL';
+        if (auth::user()->idpadre == 0) {            
+            $this->monedas = Monedas::get();            
+        } else {
+            $this->monedas = Monedas::where('idmoneda','=', auth::user()->idmoneda)->get();                        
+        }
 
         //$this->operador ["name"] = '';
         //$this->operador["email"] = '';
@@ -50,46 +68,27 @@ class OperadorController extends Component
 
         $this->operador = new Operador;
 
-        
-
-
     }
+
+
     public function render()
     {
-        if (auth()->user()->perfil == 'MASTER')
-        {
-            if ($this->estatus == 'ALL')
-            {
-                $this->data = Operador::where('name', 'like', '%'.$this->filtro.'%')
-                                    ->where('idpadre', '=', 0)
-                                    ->where('perfil', '=', 'OPERA')
-                                    ->get();
-            }
-            else 
-            {
-                $this->data = Operador::where('name', 'like', '%'.$this->filtro.'%')
-                                    ->where('estatus', '=', $this->estatus)
-                                    ->where('idpadre', '=', 0)
-                                    ->where('perfil', '=', 'OPERA')
-                                    ->get();
-            }
+        $query = Operador::where('name', 'like', '%'.$this->filtro.'%')
+                     ->where('idpadre', auth()->user()->perfil == 'MASTER' ? 0 : auth()->user()->id);
+
+        if (auth()->user()->perfil == 'MASTER') {
+            $query->where('perfil', 'OPERA');
         }
-        else 
-        {
-            if ($this->estatus == 'ALL')
-            {
-                $this->data = Operador::where('name', 'like', '%'.$this->filtro.'%')
-                            ->where('idpadre', '=', auth::user()->id)
-                            ->get();
-            }
-            else 
-            {
-                $this->data = Operador::where('name', 'like', '%'.$this->filtro.'%')
-                                    ->where('estatus', '=', $this->estatus)
-                                    ->where('idpadre', '=', auth::user()->id)
-                                    ->get();
-            }
+
+        if ($this->estatus !== 'ALL') {
+            $query->where('estatus', $this->estatus);
         }
+
+        if ($this->idmoneda !== 'ALL') {
+            $query->where('idmoneda', $this->idmoneda);
+        }
+
+        $this->data = $query->get();
         
 
         return view('livewire.operador-controller');
@@ -186,7 +185,8 @@ class OperadorController extends Component
     {
         
         $this->idopera_recarga = $operador->id;        
-        $this->monto_recarga = 0;        
+        $this->monto_recarga = 0;   
+        $this->idmoneda_recarga = $operador->idmoneda;     
         $this->emit('open_modal', 'modalRecargaSaldo');
     }
 
@@ -211,7 +211,7 @@ class OperadorController extends Component
             $caja->saldo += $recarga->monto;
             $caja->save();  
             $this->emit('close_modal', 'modalRecargaSaldo');
-            $this->emit('mensaje', "Exito", "La recarga se realizo satisfactoriamente", "success"); 
+            //$this->emit('mensaje', "Exito", "La recarga se realizo satisfactoriamente", "success"); 
 
         }
 

@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Livewire;
 use Livewire\Component;
-
+use App\Models\Monedas;
 use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Constraint\IsEmpty;
 use Illuminate\Support\Facades\Auth;
@@ -10,18 +10,15 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Component
 {
     public $ventas;
-    
     public $premios;
     public $jackpot;
     public $utilidad;
-
-    
     public $desde;
     public $hasta;
-
     public $venta_cajas;
-
     public $venta_operadores;
+    public $monedas;
+    public $idmoneda = 'ALL';
 
     public function mount()
     {
@@ -41,6 +38,12 @@ class HomeController extends Component
         
         $this->venta_cajas = [];
         $this->venta_operadores = [];
+        if (Auth::user()->idpadre == 0) {
+            $this->monedas = Monedas::get();
+        }
+        else {
+            $this->monedas = Monedas::where('idmoneda', Auth::user()->idmoneda)->get();
+        }
     }
     public function render()
     {        
@@ -57,6 +60,7 @@ class HomeController extends Component
                             
                             ->where(DB::raw('date(ken_ticket.created_at)') , '>=', $this->desde)     
                             ->where(DB::raw('date(ken_ticket.created_at)') , '<=', $this->hasta)
+                            ->where('ken_ticket.idmoneda', '=', $this->idmoneda)
                             ->where('ken_ticket.estatus', '<>', 'ANU')
                             ->where('users.idopera', '=', auth::user()->id)
                             ->first();
@@ -76,6 +80,7 @@ class HomeController extends Component
                             ->where(DB::raw('date(ken_ticket.created_at)') , '>=', $this->desde)
                             ->where(DB::raw('date(ken_ticket.created_at)') , '<=', $this->hasta)
                             ->where('ken_ticket.estatus', '<>', 'ANU')
+                            ->where('ken_ticket.idmoneda', '=', $this->idmoneda)
                             ->where('users.idopera', '=', auth::user()->id)
                             ->groupBy('users.name')
                             ->get();                            
@@ -101,6 +106,7 @@ class HomeController extends Component
                             ->where(DB::raw('date(ken_ticket.created_at)') , '>=', $this->desde)
                             ->where(DB::raw('date(ken_ticket.created_at)') , '<=', $this->hasta)
                             ->where('ken_ticket.estatus', '<>', 'ANU')
+                            ->where('ken_ticket.idmoneda', '=', $this->idmoneda)
                             ->where('users_opera.idpadre', '=', auth::user()->id)
                             ->groupBy('users_opera.name')
                             ->get();   

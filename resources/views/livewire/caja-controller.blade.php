@@ -3,14 +3,47 @@
         
         @livewire('newcaja-controller')    
     <hr>
-            <input type="text" class="form-control" placeholder="Buscar" wire:model="filtro">
-            <select name="" id="" class="form-control mt-1" wire:model="estatus">
-                <option value="ALL">Todos</option>
-                <option value="ACT">Solo Activos</option>
-                <option value="BLO">Bloqueados</option>   
-            </select>
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                Buscar
+            </div>
+            <div class="card-body p-1">
+                <div class="row">
+                    <div class="col">
+                        <label for="busqueda">Buscar</label>
+                        <input type="text" id="busqueda" class="form-control" placeholder="Buscar" wire:model="filtro">
+                        @auth
+    {{ auth()->user()->idmoneda }}
+@endauth
+                    </div>
+                    <div class="col">
+                        <label for="status">Estatus</label>
+                        <select name="status" id="status" class="form-control" wire:model="estatus">
+                            <option value="ALL">Todos</option>
+                            <option value="ACT">Solo Activos</option>
+                            <option value="BLO">Bloqueados</option>   
+                        </select>
 
-            <div class="row">
+                    </div>
+                    <div class="col">
+                        <label for="idmoneda">Moneda</label>
+                        <select name="" id="idmoneda" class="form-control" wire:model="idmoneda">
+                        <option value="ALL" selected="selected">Todas</option>
+                        @foreach ($monedas as $moneda)
+                            <option value="{{ $moneda->idmoneda }}">{{ $moneda->moneda }}</option>
+                        @endforeach
+                    </select>   
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+            
+            
+
+            <div class="row mt-4">
             @foreach ($data as $dato ) 
                 <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                     <div class="card text-start mt-1">
@@ -19,7 +52,7 @@
                         <div class="card-body">                        
                             Usuario / Login: {{ $dato->login }}<br>                        
                             Email: {{ $dato->email }}  <br>
-                            Saldo Actual: <strong>{{ number_format($dato->saldo, 2, ',', '.') }} {{ $idmoneda }}</strong>  
+                            Saldo Actual: <strong>{{ number_format($dato->saldo, 2, ',', '.') }} {{ $dato->idmoneda }}</strong>  
                         </div>
                         <div class="card-footer">
                             
